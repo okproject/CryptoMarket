@@ -5,6 +5,6 @@ namespace CryptoMarket.Api.Application.Abstraction
 {
     public interface ICommandHandler<TCommand>
     {
-        Task Handle<TCommand>(TCommand command,CancellationToken token);
+        Task Handle(TCommand command,CancellationToken token);
     }
 }

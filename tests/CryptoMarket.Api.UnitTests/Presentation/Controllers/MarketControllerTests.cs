@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using CryptoMarket.Api.Application.Abstraction;
+using CryptoMarket.Api.Application.UseCases.Commands;
 using CryptoMarket.Api.Application.UseCases.Queries;
 using CryptoMarket.Api.Controllers;
 using CryptoMarket.Api.Core;
@@ -28,6 +29,15 @@ namespace CryptoMarket.Api.UnitTests
             var query = new Mock<GetProductsQuery>();
             var result = await _ctrl.Products(query.Object);
             result.Should().BeOfType<OkObjectResult>();
+        }
+        
+        
+        [Fact]
+        public async Task Purchase_Ctrl_Should_Return_StatusCodeResult()
+        {
+            var command = new Mock<PurchaseProductCommand>();
+            var result = await _ctrl.PurchaseProduct(command.Object);
+            result.Should().BeOfType<StatusCodeResult>();
         }
     }
 }

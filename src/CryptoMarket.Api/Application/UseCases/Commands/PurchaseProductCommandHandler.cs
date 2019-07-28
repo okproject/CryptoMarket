@@ -18,6 +18,12 @@ namespace CryptoMarket.Api.Application.UseCases.Commands
 
         public Task Handle(PurchaseProductCommand command, CancellationToken token)
         {
+            /*
+             * Get product's latest price
+             * Set product up do date price
+             * Create purchase
+             * Save purchase
+             */
             
             throw new System.NotImplementedException();
         }

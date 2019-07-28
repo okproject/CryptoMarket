@@ -5,7 +5,7 @@ namespace CryptoMarket.Api.Core
 {
     public interface IPurchaseRepository:IRepository<Purchase>
     {
-        new Task Create(Purchase entity);
+         Task Save(Purchase entity);
         
 
     }

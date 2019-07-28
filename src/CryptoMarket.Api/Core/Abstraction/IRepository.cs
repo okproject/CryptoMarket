@@ -4,7 +4,7 @@ namespace CryptoMarket.Api.Core
 {
     public interface IRepository<T> where T : IEntity
     {
-        Task Create(T entity);
+        Task Save(T entity);
         
     }
 }

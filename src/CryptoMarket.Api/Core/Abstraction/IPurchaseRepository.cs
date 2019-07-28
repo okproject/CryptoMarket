@@ -3,9 +3,10 @@ using CryptoMarket.Api.Core.Model;
 
 namespace CryptoMarket.Api.Core
 {
-    public interface IPurchaseRepository : IRepository<Purchase>
+    public interface IPurchaseRepository:IRepository<Purchase>
     {
-        Task Add(Purchase entity);
-        Task Remove(Purchase entity);
+        new Task Add(Purchase entity);
+        new Task Remove(Purchase entity);
+
     }
 }

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
+using CryptoMarket.Api.Application.Abstraction;
 using CryptoMarket.Api.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CryptoMarket.Api.Data;
 using CryptoMarket.Api.Data.Repository;
+using CryptoMarket.Api.Infrastructure.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -39,7 +43,16 @@ namespace CryptoMarket.Api
 
             services.AddScoped<IPurchaseRepository, PurchaseRepository>();
 
-            
+            services.AddHttpClient<IProductGateway,ProductGateway>(_httpClient =>
+            {
+                _httpClient.BaseAddress = new Uri("https://sandbox-api.coinmarketcap.com");
+                _httpClient.Timeout = new TimeSpan(0, 0, 20);
+                _httpClient.DefaultRequestHeaders.Clear();
+                _httpClient.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY",new []{"eef7fcc9-9540-487f-88c3-5c7eb5f3dd21"});
+            }).ConfigurePrimaryHttpMessageHandler(handler=>new HttpClientHandler()
+            {
+                AutomaticDecompression = DecompressionMethods.GZip
+            });
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSwaggerGen(c =>
@@ -97,6 +110,8 @@ namespace CryptoMarket.Api
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            
+            
             
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Crypto Market Api v1"));

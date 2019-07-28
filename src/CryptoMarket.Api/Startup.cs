@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using CryptoMarket.Api.Application.Abstraction;
+using CryptoMarket.Api.Application.Services.ProductGateway;
 using CryptoMarket.Api.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;

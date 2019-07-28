@@ -1,10 +1,7 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using CryptoMarket.Api.Application.Services.ProductGateway;
-using CryptoMarket.Api.Application.UseCases.Queries;
 
-namespace CryptoMarket.Api.Application.Abstraction
+namespace CryptoMarket.Api.Application.Services.ProductGateway
 {
     public interface IProductGateway
     {

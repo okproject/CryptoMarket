@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CryptoMarket.Api.Application.Abstraction;
+using CryptoMarket.Api.Application.Services.ProductGateway;
 using CryptoMarket.Api.Application.UseCases.Commands;
 using CryptoMarket.Api.Application.UseCases.Queries;
 using CryptoMarket.Api.Core;

@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using CryptoMarket.Api.Application.Abstraction;
+using CryptoMarket.Api.Application.Services.ProductGateway;
 using CryptoMarket.Api.Core;
 using CryptoMarket.Api.Core.Model;
 

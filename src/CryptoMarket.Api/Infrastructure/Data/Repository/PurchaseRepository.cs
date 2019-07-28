@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using CryptoMarket.Api.Core;
 using CryptoMarket.Api.Core.Model;
@@ -6,26 +7,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CryptoMarket.Api.Data.Repository
 {
-    public class PurchaseRepository:IPurchaseRepository
+    public class PurchaseRepository : IPurchaseRepository
     {
-        private CryptoMarketDbContext _dbContext;
+        private ApplicationDbContext _dbContext;
 
-        public PurchaseRepository(CryptoMarketDbContext dbContext)
+        public PurchaseRepository(ApplicationDbContext dbContext)
         {
-            
             _dbContext = dbContext;
-            
         }
 
-        public async Task Remove(Purchase entity)
+        public async Task Create(Purchase entity)
         {
-            
-            throw new System.NotImplementedException();
-        }
-
-        public async Task Add(Purchase entity)
-        {
-            throw new System.NotImplementedException();
+            await _dbContext.Purchases.AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -8,6 +8,6 @@ namespace CryptoMarket.Api.Application.Abstraction
 {
     public interface IProductGateway
     {
-        Task<List<ProductViewModel>> GetProductsQuery(CancellationToken cancellationToken,int? start=1, int? limit=20);
+        Task<ProductCoinMarketCapViewModel> GetProductsQuery(CancellationToken cancellationToken,int? start=1, int? limit=20);
     }
 }

@@ -15,5 +15,7 @@ namespace CryptoMarket.Api.Core.Model
         public double Amount { get; set; }
         
         public DateTime CreateDateTime { get; set; }
+
+        public decimal TotalPrice { get; set; }
     }
 }

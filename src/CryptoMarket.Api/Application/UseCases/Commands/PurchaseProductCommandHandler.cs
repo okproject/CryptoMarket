@@ -35,10 +35,19 @@ namespace CryptoMarket.Api.Application.UseCases.Commands
                 CustomerId = 1,
                 PriceUnit = PriceUnits.USD.ToString(),
                 ProductId = command.ProductId,
-                CreateDateTime = DateTime.UtcNow
+                CreateDateTime = DateTime.UtcNow,
+                TotalPrice = CalculateTotal(command.Amount,productPrice)
             };
+                
             await _purchaseRepository.Save(purchaseModel);
-            
+        }
+
+        private decimal CalculateTotal(double amount, decimal price)
+        {
+            var amountStr = amount.ToString();
+            var decimalValue = decimal.Parse(amountStr);
+            var result = decimal.Multiply(price, decimalValue);
+            return result;
         }
     }
 }

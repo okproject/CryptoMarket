@@ -22,8 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application" />
-    <Folder Include="Core" />
     <Folder Include="Infrastructure" />
     <Folder Include="Presentation" />
   </ItemGroup>

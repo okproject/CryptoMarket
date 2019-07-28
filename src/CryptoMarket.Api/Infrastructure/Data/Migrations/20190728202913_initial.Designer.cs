@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CryptoMarket.Api.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190728190905_adds Purchase")]
-    partial class addsPurchase
+    [Migration("20190728202913_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,13 +20,12 @@ namespace CryptoMarket.Api.Data.Migrations
 
             modelBuilder.Entity("CryptoMarket.Api.Core.Model.Purchase", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<double>("Amount");
 
-                    b.Property<DateTime>("CreateDateTime")
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<DateTime>("CreateDateTime");
 
                     b.Property<int>("CustomerId");
 

@@ -18,13 +18,12 @@ namespace CryptoMarket.Api.Data.Migrations
 
             modelBuilder.Entity("CryptoMarket.Api.Core.Model.Purchase", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<double>("Amount");
 
-                    b.Property<DateTime>("CreateDateTime")
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<DateTime>("CreateDateTime");
 
                     b.Property<int>("CustomerId");
 

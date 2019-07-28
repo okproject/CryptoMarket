@@ -16,7 +16,7 @@ namespace CryptoMarket.Api.Data.Repository
             _dbContext = dbContext;
         }
 
-        public async Task Create(Purchase entity)
+        public async Task Save(Purchase entity)
         {
             await _dbContext.Purchases.AddAsync(entity);
             await _dbContext.SaveChangesAsync();

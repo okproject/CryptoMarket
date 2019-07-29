@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CryptoMarket.Api.Application.Services.ProductGateway;
 using CryptoMarket.Api.Application.UseCases.Commands;
 using CryptoMarket.Api.Core;
+using CryptoMarket.Api.Core.Model;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -33,16 +34,18 @@ namespace CryptoMarket.Api.UnitTests.Presentation.Application.UseCases
             prdGtwy.Setup(x => x.GetProductPriceById(It.IsAny<CancellationToken>(), It.IsAny<int>()))
                 .Returns(Task.FromResult(price));
 
+//            Purchase tempPurchaseResult;
+//            purRepo.Setup(x => x.Save(It.IsAny<Purchase>())).Returns(Task.CompletedTask)
+//                .Callback<Purchase>(x => tempPurchaseResult = x);
+
             var handler = new PurchaseProductCommandHandler(prdGtwy.Object, purRepo.Object);
 
             await handler.Handle(command, new CancellationToken());
             prdGtwy.Verify(x=>x.GetProductPriceById(It.IsAny<CancellationToken>(),It.IsAny<int>()),Times.Once);
-
             var purchaseModelResult = await handler.CreateAsync(command);
             var calculationResult= handler.CalculateTotal(command.Amount, price);
             purchaseModelResult.TotalPrice.Should().Equals(calculationResult);
             prdGtwy.Verify(x=>x.GetProductPriceById(It.IsAny<CancellationToken>(),It.IsAny<int>()),Times.AtLeast(2));
-
         }
     }
 }

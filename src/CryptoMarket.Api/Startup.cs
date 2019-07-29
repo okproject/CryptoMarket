@@ -36,17 +36,31 @@ namespace CryptoMarket.Api
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
+            CurrentEnvironment = env;
             Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment CurrentEnvironment { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            if (CurrentEnvironment.IsDevelopment())
+            {
+                services.AddDbContext<ApplicationDbContext>(
+                    options => options.UseInMemoryDatabase());
+            }
+            else
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlite("DataSource=app.db"));
+            }
+            
+            
+            
+            
+            
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 

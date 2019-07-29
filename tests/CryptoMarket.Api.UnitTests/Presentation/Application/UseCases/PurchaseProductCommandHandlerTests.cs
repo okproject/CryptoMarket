@@ -17,7 +17,7 @@ namespace CryptoMarket.Api.UnitTests.Presentation.Application.UseCases
         }
 
         [Fact]
-        public async Task Shoud_Calculate_Total()
+        public async Task Shoud_Calculate_Total_And_Call_Gateway()
         {
             var prdGtwy = new Mock<IProductGateway>();
             var purRepo = new Mock<IPurchaseRepository>();
@@ -30,7 +30,6 @@ namespace CryptoMarket.Api.UnitTests.Presentation.Application.UseCases
                 ProductId = 1
             };
 
-
             prdGtwy.Setup(x => x.GetProductPriceById(It.IsAny<CancellationToken>(), It.IsAny<int>()))
                 .Returns(Task.FromResult(price));
 
@@ -42,8 +41,7 @@ namespace CryptoMarket.Api.UnitTests.Presentation.Application.UseCases
             var purchaseModelResult = await handler.CreateAsync(command);
             var calculationResult= handler.CalculateTotal(command.Amount, price);
             purchaseModelResult.TotalPrice.Should().Equals(calculationResult);
-
-
+            prdGtwy.Verify(x=>x.GetProductPriceById(It.IsAny<CancellationToken>(),It.IsAny<int>()),Times.AtLeast(2));
 
         }
     }

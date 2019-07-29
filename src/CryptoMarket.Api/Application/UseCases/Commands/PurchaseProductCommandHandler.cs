@@ -27,8 +27,14 @@ namespace CryptoMarket.Api.Application.UseCases.Commands
              * Create purchase
              * Save purchase
              */
-            var productPrice = await _productGateway.GetProductPriceById(new CancellationToken(), command.ProductId);
+            var purchaseModel = await CreateAsync(command);
+                
+            await _purchaseRepository.Save(purchaseModel);
+        }
 
+        public async Task<Purchase> CreateAsync(PurchaseProductCommand command)
+        {
+            var productPrice = await _productGateway.GetProductPriceById(new CancellationToken(), command.ProductId);
             var purchaseModel = new Purchase
             {
                 Amount = command.Amount,
@@ -39,8 +45,7 @@ namespace CryptoMarket.Api.Application.UseCases.Commands
                 CreateDateTime = DateTime.UtcNow,
                 TotalPrice = CalculateTotal(command.Amount,productPrice)
             };
-                
-            await _purchaseRepository.Save(purchaseModel);
+            return purchaseModel;
         }
 
         private decimal CalculateTotal(double amount, decimal price)

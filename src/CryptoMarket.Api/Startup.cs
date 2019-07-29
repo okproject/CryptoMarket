@@ -26,10 +26,10 @@ namespace CryptoMarket.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration,IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
-            
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -56,27 +56,26 @@ namespace CryptoMarket.Api
                 services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlite("DataSource=app.db"));
             }
-            
-            
-            
-            
-            
+
+
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IPurchaseRepository, PurchaseRepository>();
 
-            services.AddHttpClient<IProductGateway,ProductGateway>(_httpClient =>
+            var apiKey = Configuration.GetSection("ApiKey").Value;
+            services.AddHttpClient<IProductGateway, ProductGateway>(_httpClient =>
             {
                 _httpClient.BaseAddress = new Uri("https://sandbox-api.coinmarketcap.com");
                 _httpClient.Timeout = new TimeSpan(0, 0, 20);
                 _httpClient.DefaultRequestHeaders.Clear();
-                _httpClient.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY",new []{"eef7fcc9-9540-487f-88c3-5c7eb5f3dd21"});
-            }).ConfigurePrimaryHttpMessageHandler(handler=>new HttpClientHandler()
+                
+                _httpClient.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", new[] {apiKey});
+            }).ConfigurePrimaryHttpMessageHandler(handler => new HttpClientHandler()
             {
                 AutomaticDecompression = DecompressionMethods.GZip
             });
-            
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSwaggerGen(c =>
             {
@@ -104,14 +103,11 @@ namespace CryptoMarket.Api
             });
 
             services.AddResponseCompression();
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -126,20 +122,17 @@ namespace CryptoMarket.Api
             app.UseAuthentication();
 
             app.UseResponseCompression();
-          
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            
-            
-            
+
+
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Crypto Market Api v1"));
-
-            
         }
     }
 }

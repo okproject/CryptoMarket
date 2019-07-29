@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoMarket.Api", "src\Cry
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoMarket.Api.UnitTests", "tests\CryptoMarket.Api.UnitTests\CryptoMarket.Api.UnitTests.csproj", "{C7EA8843-5647-432C-98CD-6A373AB32309}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoMarket.IntegrationTests", "tests\CryptoMarket.IntegrationTests\CryptoMarket.IntegrationTests.csproj", "{C32C282C-A6F0-43E3-9C58-73CCBE390D8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,6 +18,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A5D0FA48-6E62-4960-8D7F-50CDA69EFEAB} = {9DE4BADF-7E6A-4772-A9D0-60BCDAC372EE}
 		{C7EA8843-5647-432C-98CD-6A373AB32309} = {B724F149-4118-479C-9364-94B2F941DB5E}
+		{C32C282C-A6F0-43E3-9C58-73CCBE390D8D} = {B724F149-4118-479C-9364-94B2F941DB5E}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A5D0FA48-6E62-4960-8D7F-50CDA69EFEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -26,5 +29,9 @@ Global
 		{C7EA8843-5647-432C-98CD-6A373AB32309}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7EA8843-5647-432C-98CD-6A373AB32309}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7EA8843-5647-432C-98CD-6A373AB32309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C32C282C-A6F0-43E3-9C58-73CCBE390D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C32C282C-A6F0-43E3-9C58-73CCBE390D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C32C282C-A6F0-43E3-9C58-73CCBE390D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C32C282C-A6F0-43E3-9C58-73CCBE390D8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

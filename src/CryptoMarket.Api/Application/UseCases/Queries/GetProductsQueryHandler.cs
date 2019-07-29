@@ -19,7 +19,7 @@ namespace CryptoMarket.Api.Application.UseCases.Queries
 
         public async Task<List<ProductViewModel>> Handle(GetProductsQuery query, CancellationToken token)
         {
-            var productList = await _productGateway.GetProductsQuery(new CancellationToken(), query.Start, query.Size);
+            var productList = await _productGateway.GetProducts(new CancellationToken(), query.Start, query.Size);
 
             var productViewModelList = productList?.data?.Select(x => new ProductViewModel()
             {

@@ -23,7 +23,7 @@ namespace CryptoMarket.Api.Infrastructure.Service
         }
 
 
-        public async Task<ProductCoinMarketCapViewModel> GetProductsQuery(CancellationToken cancellationToken,
+        public async Task<ProductCoinMarketCapViewModel> GetProducts(CancellationToken cancellationToken,
             int? start,
             int? limit)
         {

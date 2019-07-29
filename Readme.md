@@ -1,8 +1,12 @@
 ### Steps
 1. dotnet restore
 2. dotnet build
-3. dotnet run 
-4. https://localhost:5001/swagger/index.html
+3. dotnet test
+4. dotnet run 
+
+**swagger** : 
+- https://localhost:5001/swagger/index.html
+- http://localhost:5000/swagger/index.html
 
 ### Known Issues 
 - Configurations should transfer to config files

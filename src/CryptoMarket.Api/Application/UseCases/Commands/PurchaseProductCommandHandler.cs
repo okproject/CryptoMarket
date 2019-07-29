@@ -48,7 +48,7 @@ namespace CryptoMarket.Api.Application.UseCases.Commands
             return purchaseModel;
         }
 
-        private decimal CalculateTotal(double amount, decimal price)
+        public decimal CalculateTotal(double amount, decimal price)
         {
             var amountStr = amount.ToString();
             var decimalValue = decimal.Parse(amountStr);

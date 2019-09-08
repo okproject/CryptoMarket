@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CryptoMarket.Api.Controllers
 {
-    [ApiController] 
+    [ApiController]
     [Route("api/[Controller]")]
-    public class MarketController:ControllerBase
+    public class MarketController : ControllerBase
     {
         private readonly IProductGateway _productGateway;
         private readonly IPurchaseRepository _purchaseRepository;
@@ -24,7 +24,7 @@ namespace CryptoMarket.Api.Controllers
 
         [HttpGet]
         [Route("products")]
-        public async Task<IActionResult> Products([FromQuery]GetProductsQuery query)
+        public async Task<IActionResult> Products([FromQuery] GetProductsQuery query)
         {
             var productQueryHandler = new GetProductsQueryHandler(_productGateway);
             var result = await productQueryHandler.Handle(query, new CancellationToken());
@@ -35,8 +35,8 @@ namespace CryptoMarket.Api.Controllers
         [Route("purchase")]
         public async Task<IActionResult> PurchaseProduct([FromBody] PurchaseProductCommand command)
         {
-            var handler=new PurchaseProductCommandHandler(_productGateway,_purchaseRepository);
-            await handler.Handle(command,new CancellationToken());
+            var handler = new PurchaseProductCommandHandler(_productGateway, _purchaseRepository);
+            await handler.Handle(command, new CancellationToken());
             return StatusCode(201);
         }
     }

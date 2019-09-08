@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -18,6 +19,7 @@ using MediaTypeHeaderValue = System.Net.Http.Headers.MediaTypeHeaderValue;
 
 namespace CryptoMarket.IntegrationTests
 {
+    [Category("")]
     public class UseCaseIntegarationTests
     {
         HttpClient client;
@@ -33,7 +35,7 @@ namespace CryptoMarket.IntegrationTests
             client = server.CreateClient();
         }
 
-        [Fact]
+        [Fact,Category("CustomCategory")]
         public async Task TestGetproductsUseCase()
         {
             var response = await client.GetAsync("/api/Market/products");

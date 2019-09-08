@@ -21,7 +21,7 @@ namespace CryptoMarket.Api.UnitTests.Presentation.Application.UseCases
 
         public GetProductsQueryHandlerTests()
         {
-            _query = new GetProductsQuery()
+            _query = new GetProductsQuery() 
             {
                 Size = _limit,
                 Start = _start

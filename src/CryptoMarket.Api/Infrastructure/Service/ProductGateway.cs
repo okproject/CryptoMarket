@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CryptoMarket.Api.Infrastructure.Service
 {
+
     public class ProductGateway : IProductGateway
     {
         private readonly HttpClient _httpClient;
@@ -73,6 +74,7 @@ namespace CryptoMarket.Api.Infrastructure.Service
                 var parseResult = decimal.TryParse(priceStr, out var decimalResult);
                 if (!parseResult) throw new Exception("Could not parse price information");
                 return decimalResult;
+                // test CI
             }
         }
     }

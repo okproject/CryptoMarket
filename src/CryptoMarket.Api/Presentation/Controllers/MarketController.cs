@@ -18,6 +18,7 @@ namespace CryptoMarket.Api.Controllers
 
         public MarketController(IProductGateway productGateway, IPurchaseRepository purchaseRepository)
         {
+        //test
             _productGateway = productGateway;
             _purchaseRepository = purchaseRepository;
         }

@@ -10,8 +10,8 @@ namespace CryptoMarket.Api.Application.UseCases.Commands
 {
     public class PurchaseProductCommandHandler : ICommandHandler<PurchaseProductCommand>
     {
-        private IProductGateway _productGateway;
-        private IPurchaseRepository _purchaseRepository;
+        private readonly IProductGateway _productGateway;
+        private readonly IPurchaseRepository _purchaseRepository;
 
         public PurchaseProductCommandHandler(IProductGateway productGateway, IPurchaseRepository purchaseRepository)
         {

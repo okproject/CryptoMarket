@@ -24,8 +24,8 @@ namespace CryptoMarket.Api.Infrastructure.Service
 
 
         public async Task<ProductCoinMarketCapViewModel> GetProducts(CancellationToken cancellationToken,
-            int? start,
-            int? limit)
+            int? start = default,
+            int? limit = default)
         {
             if (start == null || start <= 0) start = 1;
             if (limit == null || limit < 2 || limit <= start) limit = start + 10;
@@ -66,12 +66,12 @@ namespace CryptoMarket.Api.Infrastructure.Service
                 var resStr = await response.Content.ReadAsStringAsync();
                 var jsonResponse = JObject.Parse(resStr);
                 var priceJObject = jsonResponse["data"]?[$"{id.ToString()}"]?["quote"]?["USD"]?["price"];
-                if(priceJObject==null) throw new Exception("Could not get price information");
+                if(priceJObject==null) throw new ArgumentNullException("Could not get price information");
                 var priceStr = priceJObject.ToString();
-                if(string.IsNullOrEmpty(priceStr)) throw new Exception("Could not get price information");
+                if(string.IsNullOrEmpty(priceStr)) throw new ArgumentNullException("Could not get price information");
                 response.EnsureSuccessStatusCode();
                 var parseResult = decimal.TryParse(priceStr, out var decimalResult);
-                if (!parseResult) throw new Exception("Could not parse price information");
+                if (!parseResult) throw new ArgumentNullException("Could not parse price information");
                 return decimalResult;
             }
         }

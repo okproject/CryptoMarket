@@ -40,10 +40,10 @@ namespace CryptoMarket.Api.Application.Services.ProductGateway
 
     public class Quote
     {
-        public USD USD { get; set; }
+        public Usd Usd { get; set; }
     }
 
-    public class USD
+    public class Usd
     {
         public decimal price { get; set; }
     }

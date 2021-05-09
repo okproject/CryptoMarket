@@ -10,7 +10,7 @@ namespace CryptoMarket.Api.Application.UseCases.Queries
 {
     public class GetProductsQueryHandler:IQueryHandler<GetProductsQuery,List<ProductViewModel>>
     {
-        private IProductGateway _productGateway;
+        private readonly IProductGateway _productGateway;
 
         public GetProductsQueryHandler(IProductGateway productGateway)
         {
@@ -25,7 +25,7 @@ namespace CryptoMarket.Api.Application.UseCases.Queries
             {
                 Id = x.id,
                 Name = x.name,
-                Price = x.quote.USD.price,
+                Price = x.quote.Usd.price,
                 PriceUnit = PriceUnits.USD.ToString()
             }).ToList();
             return productViewModelList;

@@ -33,7 +33,7 @@ jobs:
       - name: build
         run: dotnet build --configuration Release --no-restore
       - name: test
-        run: dotnet test --no-restore --verbosity normal
+        run: dotnet test --collect:"XPlat Code Coverage" --no-restore --verbosity normal
         #run: dotnet test --no-build --verbosity normal
         
 

@@ -13,7 +13,7 @@ namespace CryptoMarket.Api.Controllers
     [Route("api/[Controller]")]
     public class MarketController : ControllerBase
     {
-        private readonly IProductGateway _productGateway;
+        private IProductGateway _productGateway;
         private readonly IPurchaseRepository _purchaseRepository;
 
         public MarketController(IProductGateway productGateway, IPurchaseRepository purchaseRepository)

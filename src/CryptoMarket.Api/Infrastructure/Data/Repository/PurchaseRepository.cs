@@ -9,7 +9,7 @@ namespace CryptoMarket.Api.Data.Repository
 {
     public class PurchaseRepository : IPurchaseRepository
     {
-        private ApplicationDbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
 
         public PurchaseRepository(ApplicationDbContext dbContext)
         {

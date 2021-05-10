@@ -30,7 +30,7 @@ namespace CryptoMarket.Api
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
-//None
+            //None
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)

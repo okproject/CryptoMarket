@@ -20,6 +20,7 @@ using CryptoMarket.Api.Data.Repository;
 using CryptoMarket.Api.Infrastructure.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace CryptoMarket.Api
@@ -49,7 +50,7 @@ namespace CryptoMarket.Api
             if (CurrentEnvironment.IsDevelopment())
             {
                 services.AddDbContext<ApplicationDbContext>(
-                    options => options.UseInMemoryDatabase());
+                    options => options.UseInMemoryDatabase("exampleDb"));
             }
             else
             {
@@ -79,7 +80,7 @@ namespace CryptoMarket.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info
+                c.SwaggerDoc("v1", new OpenApiInfo()
                 {
                     Title = "Crypto Market Api v1",
                     Version = "v1"
@@ -90,16 +91,20 @@ namespace CryptoMarket.Api
                     {"Bearer", new string[] { }},
                 };
 
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Description =
                         "JWT Authorization header using theBearer scheme.Example: \"Authorization: Bearer {token}\"",
                     Name = "Authorization",
-                    In = "header",
-                    Type = "apiKey"
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    
                 });
 
-                c.AddSecurityRequirement(security);
+                // c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                // {
+                //     
+                // });
             });
 
             services.AddResponseCompression();
@@ -111,7 +116,7 @@ namespace CryptoMarket.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                // app.UseDatabaseErrorPage();
             }
             else
             {

@@ -20,14 +20,16 @@ using CryptoMarket.Api.Data.Repository;
 using CryptoMarket.Api.Infrastructure.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace CryptoMarket.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             //None
@@ -42,7 +44,7 @@ namespace CryptoMarket.Api
         }
 
         public IConfiguration Configuration { get; }
-        public IHostingEnvironment CurrentEnvironment { get; set; }
+        public IWebHostEnvironment CurrentEnvironment { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -57,7 +59,7 @@ namespace CryptoMarket.Api
                 services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlite("DataSource=app.db"));
             }
-
+            // services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -77,7 +79,7 @@ namespace CryptoMarket.Api
                 AutomaticDecompression = DecompressionMethods.GZip
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo()
@@ -90,7 +92,7 @@ namespace CryptoMarket.Api
                 {
                     {"Bearer", new string[] { }},
                 };
-
+                // services.AddDatabaseDeveloperPageExceptionFilter();
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Description =
@@ -110,12 +112,13 @@ namespace CryptoMarket.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                // app.UseDatabaseErrorPage();
+                
+                
             }
             else
             {
@@ -127,16 +130,21 @@ namespace CryptoMarket.Api
 
             app.UseResponseCompression();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+    
 
-
+            
+            
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Crypto Market Api v1"));
+            
+            
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+            });
         }
     }
 }

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.IdentityModel.Xml;
+
 
 namespace CryptoMarket.Api.Application.Services.ProductGateway
 {

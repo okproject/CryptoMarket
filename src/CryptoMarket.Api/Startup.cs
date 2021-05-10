@@ -20,16 +20,19 @@ using CryptoMarket.Api.Data.Repository;
 using CryptoMarket.Api.Infrastructure.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace CryptoMarket.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
-
+            //None
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -41,7 +44,7 @@ namespace CryptoMarket.Api
         }
 
         public IConfiguration Configuration { get; }
-        public IHostingEnvironment CurrentEnvironment { get; set; }
+        public IWebHostEnvironment CurrentEnvironment { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -49,14 +52,14 @@ namespace CryptoMarket.Api
             if (CurrentEnvironment.IsDevelopment())
             {
                 services.AddDbContext<ApplicationDbContext>(
-                    options => options.UseInMemoryDatabase());
+                    options => options.UseInMemoryDatabase("exampleDb"));
             }
             else
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlite("DataSource=app.db"));
             }
-
+            // services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -69,17 +72,17 @@ namespace CryptoMarket.Api
                 _httpClient.BaseAddress = new Uri("https://sandbox-api.coinmarketcap.com");
                 _httpClient.Timeout = new TimeSpan(0, 0, 20);
                 _httpClient.DefaultRequestHeaders.Clear();
-                
+
                 _httpClient.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", new[] {apiKey});
             }).ConfigurePrimaryHttpMessageHandler(handler => new HttpClientHandler()
             {
                 AutomaticDecompression = DecompressionMethods.GZip
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info
+                c.SwaggerDoc("v1", new OpenApiInfo()
                 {
                     Title = "Crypto Market Api v1",
                     Version = "v1"
@@ -89,29 +92,33 @@ namespace CryptoMarket.Api
                 {
                     {"Bearer", new string[] { }},
                 };
-
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                // services.AddDatabaseDeveloperPageExceptionFilter();
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Description =
                         "JWT Authorization header using theBearer scheme.Example: \"Authorization: Bearer {token}\"",
                     Name = "Authorization",
-                    In = "header",
-                    Type = "apiKey"
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
                 });
 
-                c.AddSecurityRequirement(security);
+                // c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                // {
+                //     
+                // });
             });
 
             services.AddResponseCompression();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                
+                
             }
             else
             {
@@ -123,16 +130,21 @@ namespace CryptoMarket.Api
 
             app.UseResponseCompression();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+    
 
-
+            
+            
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Crypto Market Api v1"));
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+            });
         }
     }
 }

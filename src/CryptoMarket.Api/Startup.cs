@@ -136,8 +136,8 @@ namespace CryptoMarket.Api
             
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Crypto Market Api v1"));
-            
-            
+
+            app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

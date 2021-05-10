@@ -30,7 +30,7 @@ namespace CryptoMarket.Api
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
-
+//None
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -70,7 +70,7 @@ namespace CryptoMarket.Api
                 _httpClient.BaseAddress = new Uri("https://sandbox-api.coinmarketcap.com");
                 _httpClient.Timeout = new TimeSpan(0, 0, 20);
                 _httpClient.DefaultRequestHeaders.Clear();
-                
+
                 _httpClient.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", new[] {apiKey});
             }).ConfigurePrimaryHttpMessageHandler(handler => new HttpClientHandler()
             {
@@ -98,7 +98,6 @@ namespace CryptoMarket.Api
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
-                    
                 });
 
                 // c.AddSecurityRequirement(new OpenApiSecurityRequirement()
